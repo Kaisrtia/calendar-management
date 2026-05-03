@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId        String         @id @default(uuid())
+  name          String
+  appointments  Appointment[]
+  groupMeetings GroupMeeting[] // This creates an implicit many-to-many relation table
+}
+
+model Appointment {
+  id        String     @id @default(uuid())
+  name      String
+  location  String
+  startTime DateTime
+  endTime   DateTime
+  
+  // Relation to User (acting as the Calendar owner)
+  userId    String
+  user      User       @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  
+  reminders Reminder[]
+}
+
+model Reminder {
+  id            String      @id @default(uuid())
+  remindAt      DateTime
+  
+  appointmentId String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+}
+
+model GroupMeeting {
+  id           String   @id @default(uuid())
+  name         String
+  duration     Int      // Storing duration in minutes, needed for findMatchingGroupMeeting(name, duration)
+  
+  participants User[]   // Implicit many-to-many relation with User
+}
