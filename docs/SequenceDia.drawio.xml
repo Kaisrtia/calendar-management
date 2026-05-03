@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Trang-1" id="M7mkt0P_oK8eprsMvcj0">
+    <mxGraphModel dx="510" dy="290" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-48" edge="1" parent="1" source="swxX4Ejk87_Ka_Nywidn-4" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.255;exitY=0.998;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="525" y="2078" as="sourcePoint" />
+            <mxPoint x="524.925" y="1341" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-4" edge="1" parent="1" source="swxX4Ejk87_Ka_Nywidn-4" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.45;exitY=1.003;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="765.25" y="1371" as="sourcePoint" />
+            <mxPoint x="763" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-3" edge="1" parent="1" source="FFvwHL-moH3tv_M_ZLsZ-33" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.255;exitY=0.998;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="525.25" y="1351" as="sourcePoint" />
+            <mxPoint x="522.75" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-36" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="568" width="10" x="760" y="662" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-33" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="2080" width="10" x="519" y="286" as="geometry" />
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:Guest&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="30" x="280" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:CalendarController&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="136.5" x="694" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:GUI_Calendar&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="464" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-4" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;width=190;height=40;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="sd Add Calendar" vertex="1">
+          <mxGeometry height="2370" width="1235" x="210" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:Calendar&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="964" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-6" edge="1" parent="1" source="swxX4Ejk87_Ka_Nywidn-4" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.072;exitY=0.997;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="293.5" y="866" as="sourcePoint" />
+            <mxPoint x="296.5" y="249" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-11" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="clickAddAppointment()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="295" y="299" as="sourcePoint" />
+            <mxPoint x="518" y="299" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-33" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="showAddAppointmentWindow()">
+          <mxGeometry relative="1" x="0.0059" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="519" y="403" as="sourcePoint" />
+            <mxPoint x="296" y="403" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-35" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="enterDetails(name, location&amp;nbsp;&lt;div&gt;start, end,...)&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="297" y="491" as="sourcePoint" />
+            <mxPoint x="518" y="491" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-37" edge="1" parent="1" style="html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=0;rounded=0;fontSize=14;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="swxX4Ejk87_Ka_Nywidn-36" value="validateInput()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="559" y="504" />
+              <mxPoint x="559" y="534" />
+            </Array>
+            <mxPoint x="529" y="504" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-45" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:GroupMeeting&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1260" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-5" edge="1" parent="1" source="FFvwHL-moH3tv_M_ZLsZ-34" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.255;exitY=0.998;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1029.25" y="1371" as="sourcePoint" />
+            <mxPoint x="1027" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-6" edge="1" parent="1" source="swxX4Ejk87_Ka_Nywidn-4" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.906;exitY=0.999;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1327.25" y="1371" as="sourcePoint" />
+            <mxPoint x="1325" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-9" edge="1" parent="1" style="html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-8" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;getActiveDateTime()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.0117" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="560" y="366" />
+            </Array>
+            <mxPoint x="530" y="336" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-10" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;loop&lt;/b&gt;" vertex="1">
+          <mxGeometry height="830" width="1199" x="236" y="416" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-11" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Until valid and no conflict]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="186" x="304" y="419" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-12" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="show validation error">
+          <mxGeometry relative="1" x="0.0059" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="517" y="617" as="sourcePoint" />
+            <mxPoint x="298" y="617" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-15" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="checkTimeConflict(start, end)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="530" y="671" as="sourcePoint" />
+            <mxPoint x="758" y="671" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-16" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="findConflict(start, end)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="770" y="689" as="sourcePoint" />
+            <mxPoint x="1023" y="689" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-17" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="conflictingAppt / null">
+          <mxGeometry relative="1" x="0.0059" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="1024" y="736.23" as="sourcePoint" />
+            <mxPoint x="771" y="736" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-18" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;alt&lt;/b&gt;" vertex="1">
+          <mxGeometry height="456" width="1155" x="261" y="761" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Conflict exists]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="123" x="325" y="764" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-20" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="conflictWarning(conflictingAppt)">
+          <mxGeometry relative="1" x="0.0059" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="765" y="801.23" as="sourcePoint" />
+            <mxPoint x="529" y="801" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-22" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="ask choose another time&lt;div&gt;&amp;nbsp;or replace old appointment&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0059" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="518" y="844" as="sourcePoint" />
+            <mxPoint x="296" y="844" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-23" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;alt&lt;/b&gt;" vertex="1">
+          <mxGeometry height="262" width="1129" x="277" y="856" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-24" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Choose another time]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="161" x="342" y="856" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-27" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;alt&lt;/b&gt;" vertex="1">
+          <mxGeometry height="681" width="1180" x="246" y="553" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Invalid Input]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="186" x="267" y="556" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-29" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.002;exitY=0.341;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.999;entryY=0.128;entryDx=0;entryDy=0;entryPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-27" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="246" y="634" as="sourcePoint" />
+            <mxPoint x="1362" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-30" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Valid Input]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="186" x="263" y="636" as="geometry" />
+        </mxCell>
+        <mxCell id="swxX4Ejk87_Ka_Nywidn-36" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};fontSize=14;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="20" width="10" x="524" y="524" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-8" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="26" width="9" x="526" y="356" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-35" edge="1" parent="1" source="FFvwHL-moH3tv_M_ZLsZ-52" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.664;exitY=1.003;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" target="FFvwHL-moH3tv_M_ZLsZ-34" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1029.25" y="1371" as="sourcePoint" />
+            <mxPoint x="1027" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-34" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="54" width="10" x="1023" y="682" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-37" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="enter another time">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="298" y="914" as="sourcePoint" />
+            <mxPoint x="519" y="914" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-26" edge="1" parent="1" source="FFvwHL-moH3tv_M_ZLsZ-23" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.003;exitY=0.29;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.002;entryY=0.292;entryDx=0;entryDy=0;entryPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-23" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="270" y="949" as="sourcePoint" />
+            <mxPoint x="1395" y="937" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-38" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Choose replace]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="140" x="330" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-39" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="confirm replace">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="298" y="996" as="sourcePoint" />
+            <mxPoint x="519" y="996" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-40" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="replaceOldAppointment&lt;div&gt;(conflictingAppt)&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="532" y="1021" as="sourcePoint" />
+            <mxPoint x="760" y="1021" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-41" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="removeAppointment&lt;div&gt;(conflictingAppt)&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="770" y="1042" as="sourcePoint" />
+            <mxPoint x="1028" y="1042" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-42" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.002;exitY=0.341;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.782;entryDx=0;entryDy=0;entryPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="258.5" y="1130.41" as="sourcePoint" />
+            <mxPoint x="1413.5" y="1129.002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-43" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[No conflict]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="123" x="310" y="1133" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-44" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="16" width="10" x="765" y="1087" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-45" edge="1" parent="1" style="html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-44" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;mark conflict resolved&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.0084" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="800" y="1097" />
+            </Array>
+            <mxPoint x="770" y="1067" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-46" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="16" width="10" x="765" y="1181" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-47" edge="1" parent="1" style="html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-46" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;mark conflict resolved&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.0084" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="800" y="1191" />
+            </Array>
+            <mxPoint x="770" y="1161" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-50" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="requestAddAppointment(data)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="531" y="1283" as="sourcePoint" />
+            <mxPoint x="759" y="1283" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-51" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="1073" width="10" x="757.25" y="1275" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-53" edge="1" parent="1" source="swxX4Ejk87_Ka_Nywidn-4" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.664;exitY=1.003;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" target="FFvwHL-moH3tv_M_ZLsZ-52" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1030" y="2088" as="sourcePoint" />
+            <mxPoint x="1030" y="736" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-52" parent="1" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="" vertex="1">
+          <mxGeometry height="47" width="10" x="1023" y="1285" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-54" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" target="FFvwHL-moH3tv_M_ZLsZ-52" value="findMatchingGroupMeeting&lt;div&gt;(name, duration)&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="767.25" y="1297" as="sourcePoint" />
+            <mxPoint x="995.25" y="1297" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-55" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="matchedGroupMeeting / null">
+          <mxGeometry relative="1" x="0.0059" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="1020.25" y="1330.8" as="sourcePoint" />
+            <mxPoint x="767.25" y="1330.57" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-56" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;alt&lt;/b&gt;" vertex="1">
+          <mxGeometry height="1072" width="1199" x="236" y="1348" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-57" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Matching group meeting found]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="184" x="312" y="1355" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-58" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="askJoinGroupMeeting&lt;div&gt;(matchedGroupMeeting)&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0032" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="754" y="1401" as="sourcePoint" />
+            <mxPoint x="529" y="1401" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-59" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="ask join group meeting?">
+          <mxGeometry relative="1" x="0.0032" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="519" y="1435" as="sourcePoint" />
+            <mxPoint x="294" y="1435" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-60" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;alt&lt;/b&gt;" vertex="1">
+          <mxGeometry height="531" width="1180" x="255" y="1455" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-61" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Choose yes]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="184" x="282" y="1457" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-62" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="confirm join">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="298" y="1516" as="sourcePoint" />
+            <mxPoint x="519" y="1516" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-63" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="confirmJoin()">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="529" y="1542" as="sourcePoint" />
+            <mxPoint x="757" y="1542" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-64" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="addParticipant(User)">
+          <mxGeometry relative="1" x="-0.5579" y="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="767.25" y="1569" as="sourcePoint" />
+            <mxPoint x="1327" y="1569" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-65" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="showSuccess(&quot;Joined&quot;)">
+          <mxGeometry relative="1" x="0.0032" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="757.25" y="1597" as="sourcePoint" />
+            <mxPoint x="532.25" y="1597" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-66" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.002;exitY=0.341;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.295;entryDx=0;entryDy=0;entryPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-60" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="255" y="1622" as="sourcePoint" />
+            <mxPoint x="1425" y="1622" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-67" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[Choose no]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="184" x="277" y="1630" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-68" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="FFvwHL-moH3tv_M_ZLsZ-69" value="new(name, location, start, end,..)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="767.25" y="1683" as="sourcePoint" />
+            <mxPoint x="961" y="1683" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-69" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:Appointment&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1055" y="1651" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-70" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;loop&lt;/b&gt;" vertex="1">
+          <mxGeometry height="129" width="719" x="668" y="1728" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-71" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[for each selected reminder]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="205.5" x="772" y="1728" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-72" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:Reminder&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1196" y="1753" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-73" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" value="new(remindAt)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="772" y="1788" as="sourcePoint" />
+            <mxPoint x="1196" y="1788" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-74" edge="1" parent="1" source="FFvwHL-moH3tv_M_ZLsZ-60" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.73;exitY=0.995;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-69" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1087" y="1825" as="sourcePoint" />
+            <mxPoint x="1137" y="1775" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-75" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="addReminder(reminder)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="770" y="1836" as="sourcePoint" />
+            <mxPoint x="1115" y="1834" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-76" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="addAppointment(appointment)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="765" y="1914" as="sourcePoint" />
+            <mxPoint x="1035" y="1914" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-77" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="showSuccess(&quot;Added&quot;)">
+          <mxGeometry relative="1" x="0.0032" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="757.25" y="1969" as="sourcePoint" />
+            <mxPoint x="532.25" y="1969" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-78" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.002;exitY=0.341;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.997;entryY=0.632;entryDx=0;entryDy=0;entryPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" target="FFvwHL-moH3tv_M_ZLsZ-56" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="238" y="2019.4080000000001" as="sourcePoint" />
+            <mxPoint x="1393" y="2018" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-79" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[No matching group meeting]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="184" x="310" y="2035" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-80" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" value="new(name, location, start, end,..)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="767.25" y="2078" as="sourcePoint" />
+            <mxPoint x="1055" y="2076" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-81" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:Appointment&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1055" y="2045" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-82" edge="1" parent="1" source="FFvwHL-moH3tv_M_ZLsZ-56" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.734;exitY=0.997;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1114" y="2301" as="sourcePoint" />
+            <mxPoint x="1114" y="2108" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-83" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;" value="&lt;b&gt;loop&lt;/b&gt;" vertex="1">
+          <mxGeometry height="129" width="719" x="664.5" y="2115" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-84" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;labelBackgroundColor=none;fontColor=#1D3557;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;[for each selected reminder]&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="205.5" x="768.5" y="2115" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-85" parent="1" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#A8DADC;strokeColor=#457B9D;fontColor=#1D3557;fontSize=14;" value="&lt;b&gt;:Reminder&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1192.5" y="2140" as="geometry" />
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-86" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" value="new(remindAt)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="768.5" y="2175" as="sourcePoint" />
+            <mxPoint x="1192.5" y="2175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-87" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="addReminder(reminder)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="766.5" y="2223" as="sourcePoint" />
+            <mxPoint x="1111.5" y="2221" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-88" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="addAppointment(appointment2)">
+          <mxGeometry relative="1" x="-0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="772" y="2281" as="sourcePoint" />
+            <mxPoint x="1032" y="2281" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FFvwHL-moH3tv_M_ZLsZ-89" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;labelBackgroundColor=none;strokeColor=#457B9D;fontColor=default;fontSize=14;" value="showSuccess(&quot;Added&quot;)">
+          <mxGeometry relative="1" x="0.0032" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="754" y="2339" as="sourcePoint" />
+            <mxPoint x="529" y="2339" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
