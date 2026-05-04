@@ -1,25 +1,32 @@
 const prisma = require('../config/db');
 
 class GroupMeetingRepository {
-    async findMatchingGroupMeeting(name, duration) {
-        return await prisma.groupMeeting.findFirst({
-            where: { 
-                name: name,
-                duration: duration
-            }
+    async findMatchingGroupMeeting(name, durationMinutes) {
+        // Find group meetings where the associated appointment matches name and calculated duration
+        const meetings = await prisma.groupMeeting.findMany({
+            include: { appointment: true }
         });
+        
+        for (const gm of meetings) {
+            if (gm.appointment.name === name) {
+                const diffMs = new Date(gm.appointment.endTime) - new Date(gm.appointment.startTime);
+                const diffMins = Math.round(diffMs / 60000);
+                if (diffMins === durationMinutes) {
+                    return gm;
+                }
+            }
+        }
+        return null;
     }
 
     async addParticipant(meetingId, userId) {
         return await prisma.groupMeeting.update({
             where: { id: meetingId },
             data: {
-                participants: {
-                    connect: { userId: userId }
-                }
-            }
+                participants: { connect: { userId } }
+            },
+            include: { appointment: true }
         });
     }
 }
-
 module.exports = new GroupMeetingRepository();

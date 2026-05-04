@@ -2,9 +2,13 @@ const prisma = require('../config/db');
 
 class AppointmentRepository {
     async findConflict(userId, startTime, endTime) {
+        // Need to look up the user's calendar first to comply strictly with the schema
+        const user = await prisma.user.findUnique({ where: { userId }, include: { calendar: true } });
+        if (!user || !user.calendar) return null;
+
         return await prisma.appointment.findFirst({
             where: {
-                userId: userId,
+                calendarId: user.calendar.id,
                 OR: [
                     {
                         // New appointment starts during an existing appointment
@@ -23,18 +27,32 @@ class AppointmentRepository {
     }
 
     async createAppointment(data) {
-        return await prisma.appointment.create({
-            data: {
-                name: data.name,
-                location: data.location,
-                startTime: new Date(data.startTime),
-                endTime: new Date(data.endTime),
-                userId: data.userId,
-                reminders: {
-                    create: data.reminders?.map(remindAt => ({ remindAt: new Date(remindAt) })) || []
+        const user = await prisma.user.findUnique({ where: { userId: data.userId }, include: { calendar: true } });
+        
+        const appointmentData = {
+            name: data.name,
+            location: data.location,
+            startTime: new Date(data.startTime),
+            endTime: new Date(data.endTime),
+            calendarId: user.calendar.id,
+            reminders: {
+                create: data.reminders?.map(remindAt => ({ remindAt: new Date(remindAt) })) || []
+            }
+        };
+
+        if (data.isGroupMeeting) {
+            appointmentData.groupMeeting = {
+                create: {
+                    participants: {
+                        connect: [{ userId: data.userId }]
+                    }
                 }
-            },
-            include: { reminders: true }
+            };
+        }
+
+        return await prisma.appointment.create({
+            data: appointmentData,
+            include: { reminders: true, groupMeeting: true }
         });
     }
 }

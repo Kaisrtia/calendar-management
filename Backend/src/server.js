@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const appointmentRoutes = require('./routes/appointmentRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routing
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/users', userRoutes);
 
 // General connection check
 app.get('/health', (req, res) => {
