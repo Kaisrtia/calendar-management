@@ -4,47 +4,114 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Start seeding...');
 
-  // 1. Clear existing data to avoid duplicates upon multi-seeds
   await prisma.reminder.deleteMany();
-  await prisma.appointment.deleteMany();
   await prisma.groupMeeting.deleteMany();
+  await prisma.appointment.deleteMany();
+  await prisma.calendar.deleteMany();
   await prisma.user.deleteMany();
 
-  // 2. Create Users
-  const user1 = await prisma.user.create({
-    data: {
+  // Create users AND their 1:1 Calendar simultaneously
+  const user1 = await prisma.user.create({ 
+    data: { 
       name: 'Alice Designer',
+      calendar: { create: {} }
     },
+    include: { calendar: true }
   });
-
-  const user2 = await prisma.user.create({
-    data: {
+  
+  const user2 = await prisma.user.create({ 
+    data: { 
       name: 'Bob Engineer',
+      calendar: { create: {} }
     },
+    include: { calendar: true }
   });
 
   console.log(`Created users: ${user1.name}, ${user2.name}`);
 
-  // 3. Create a Group Meeting for testing the "Join Group" logic
-  // The system checks for name and duration (in minutes)
-  const groupMeeting1 = await prisma.groupMeeting.create({
+  // Create a Group Meeting via Appointment inheritance
+  const gmStart = new Date();
+  gmStart.setHours(gmStart.getHours() + 2); // 2 hours from now
+  const gmEnd = new Date(gmStart);
+  gmEnd.setHours(gmEnd.getHours() + 1); // 1 hour duration
+
+  const groupMeetingAppt = await prisma.appointment.create({
     data: {
       name: 'Weekly Sync',
-      duration: 60, // 60 minutes
-      participants: {
-        connect: [{ userId: user1.userId }], // Alice is already in the meeting
-      },
+      location: 'Zoom Room',
+      startTime: gmStart,
+      endTime: gmEnd,
+      calendarId: user1.calendar.id, // Alice's calendar
+      groupMeeting: {
+        create: {
+          participants: {
+             // Participant uses User ID (not Calendar ID)
+            connect: [{ userId: user1.userId }]
+          }
+        }
+      }
     },
+    include: {
+      groupMeeting: true
+    }
   });
 
-  console.log(`Created group meeting: ${groupMeeting1.name}`);
+  console.log(`Created group meeting: ${groupMeetingAppt.name}`);
 
-  // 4. Create an existing Appointment for testing Time Conflicts
-  // Let's say Alice has an appointment tomorrow from 10:00 AM to 11:00 AM
+  const monthlyStart = new Date();
+  monthlyStart.setDate(monthlyStart.getDate() + 2);
+  monthlyStart.setHours(14, 0, 0, 0);
+  const monthlyEnd = new Date(monthlyStart);
+  monthlyEnd.setHours(15, 30, 0, 0);
+
+  const groupMeetingAppt2 = await prisma.appointment.create({
+    data: {
+      name: 'Monthly Planning',
+      location: 'Conference Room B',
+      startTime: monthlyStart,
+      endTime: monthlyEnd,
+      calendarId: user2.calendar.id, // Bob's Calendar
+      groupMeeting: {
+        create: {
+          participants: {
+            connect: [{ userId: user2.userId }, { userId: user1.userId }]
+          }
+        }
+      }
+    }
+  });
+
+  console.log(`Created group meeting: ${groupMeetingAppt2.name}`);
+
+  const codeRevStart = new Date();
+  codeRevStart.setDate(codeRevStart.getDate() + 3); 
+  codeRevStart.setHours(11, 0, 0, 0); 
+  const codeRevEnd = new Date(codeRevStart);
+  codeRevEnd.setHours(12, 0, 0, 0);
+
+  const groupMeetingAppt3 = await prisma.appointment.create({
+    data: {
+      name: 'Code Review Session',
+      location: 'Google Meet',
+      startTime: codeRevStart,
+      endTime: codeRevEnd,
+      calendarId: user2.calendar.id,
+      groupMeeting: {
+        create: {
+          participants: {
+            connect: [{ userId: user2.userId }]
+          }
+        }
+      }
+    }
+  });
+
+  console.log(`Created group meeting: ${groupMeetingAppt3.name}`);
+
+  // Create an existing Appointment for time conflicts
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(10, 0, 0, 0);
-
   const tomorrowEnd = new Date(tomorrow);
   tomorrowEnd.setHours(11, 0, 0, 0);
 
@@ -54,10 +121,10 @@ async function main() {
       location: 'Room A',
       startTime: tomorrow,
       endTime: tomorrowEnd,
-      userId: user1.userId,
+      calendarId: user1.calendar.id, // Linked to Alice's Calendar
       reminders: {
         create: [
-          { remindAt: new Date(tomorrow.getTime() - 15 * 60000) } // 15 mins before
+          { remindAt: new Date(tomorrow.getTime() - 15 * 60000) }
         ]
       }
     },
@@ -67,11 +134,4 @@ async function main() {
   console.log('Seeding finished.');
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main().catch(e => { console.error(e); process.exit(1); }).finally(async () => { await prisma.$disconnect(); });
