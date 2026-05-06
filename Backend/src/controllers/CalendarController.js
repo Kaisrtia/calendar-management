@@ -2,7 +2,7 @@ const calendarService = require('../services/CalendarService');
 const groupMeetingService = require('../services/GroupMeetingService');
 
 class CalendarController {
-    
+
     // Check if new appointment conflicts with existing ones
     async checkConflict(req, res) {
         try {
@@ -10,7 +10,7 @@ class CalendarController {
             if (!userId || !startTime || !endTime) {
                 return res.status(400).json({ error: "Missing parameters" });
             }
-            
+
             const conflict = await calendarService.checkConflict(userId, startTime, endTime);
             return res.status(200).json({ conflict: conflict || null });
         } catch (error) {
@@ -35,21 +35,21 @@ class CalendarController {
     async requestAddAppointment(req, res) {
         try {
             const { name, startTime, endTime } = req.body;
-            
+
             // Calculate duration in minutes securely
             const start = new Date(startTime);
             const end = new Date(endTime);
-            
+
             if (end <= start || !name) {
                 return res.status(400).json({ error: "Invalid duration or name" });
             }
-            
+
             const duration = Math.round((end - start) / (1000 * 60)); // in minutes
-            
+
             const matchingGroupMeeting = await groupMeetingService.findMatchingGroupMeeting(name, duration);
-            
+
             if (matchingGroupMeeting) {
-                return res.status(200).json({ matchedGroupMeeting });
+                return res.status(200).json({ matchedGroupMeeting: matchingGroupMeeting });
             } else {
                 // [No matching group meeting]
                 // According to UML, create appointment and reminders immediately
@@ -66,7 +66,7 @@ class CalendarController {
         try {
             const { meetingId, userId } = req.body;
             await groupMeetingService.confirmJoin(meetingId, userId);
-            
+
             return res.status(200).json({ message: "Joined successfully" });
         } catch (error) {
             return res.status(500).json({ error: error.message });
