@@ -8,6 +8,10 @@ class GroupMeetingService {
     async confirmJoin(meetingId, userId) {
         return await groupMeetingRepo.addParticipant(meetingId, userId);
     }
+
+    async leaveMeeting(meetingId, userId) {
+        return await groupMeetingRepo.leaveParticipant(meetingId, userId);
+    }
 }
 
 module.exports = new GroupMeetingService();

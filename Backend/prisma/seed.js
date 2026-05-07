@@ -44,9 +44,14 @@ async function main() {
       calendarId: user1.calendar.id, // Alice's calendar
       groupMeeting: {
         create: {
+          owner: {
+            connect: { userId: user1.userId }
+          },
           participants: {
              // Participant uses User ID (not Calendar ID)
-            connect: [{ userId: user1.userId }]
+            create: [
+              { user: { connect: { userId: user1.userId } } }
+            ]
           }
         }
       }
@@ -73,8 +78,14 @@ async function main() {
       calendarId: user2.calendar.id, // Bob's Calendar
       groupMeeting: {
         create: {
+          owner: {
+            connect: { userId: user2.userId }
+          },
           participants: {
-            connect: [{ userId: user2.userId }, { userId: user1.userId }]
+            create: [
+              { user: { connect: { userId: user2.userId } } },
+              { user: { connect: { userId: user1.userId } } }
+            ]
           }
         }
       }
@@ -98,8 +109,13 @@ async function main() {
       calendarId: user2.calendar.id,
       groupMeeting: {
         create: {
+          owner: {
+            connect: { userId: user2.userId }
+          },
           participants: {
-            connect: [{ userId: user2.userId }]
+            create: [
+              { user: { connect: { userId: user2.userId } } }
+            ]
           }
         }
       }

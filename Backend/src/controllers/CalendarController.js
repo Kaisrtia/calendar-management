@@ -1,17 +1,38 @@
 const calendarService = require('../services/CalendarService');
 const groupMeetingService = require('../services/GroupMeetingService');
 
+function validateAppointmentPayload(body) {
+    const { userId, name, location, startTime, endTime } = body;
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+
+    if (!userId) return "Missing user";
+    if (!name || !name.trim()) return "Appointment name is required";
+    if (!location || !location.trim()) return "Location is required";
+    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return "Start and end times are required";
+    if (end <= start) return "End time must be after start time";
+
+    if (body.reminderMinutesBefore !== undefined && body.reminderMinutesBefore !== null && body.reminderMinutesBefore !== '') {
+        const minutesBefore = Number(body.reminderMinutesBefore);
+        if (!Number.isFinite(minutesBefore) || minutesBefore < 0) {
+            return "Reminder must be a positive number of minutes before the appointment";
+        }
+    }
+
+    return null;
+}
+
 class CalendarController {
 
     // Check if new appointment conflicts with existing ones
     async checkConflict(req, res) {
         try {
-            const { userId, startTime, endTime } = req.body;
+            const { userId, startTime, endTime, excludeAppointmentId } = req.body;
             if (!userId || !startTime || !endTime) {
                 return res.status(400).json({ error: "Missing parameters" });
             }
 
-            const conflict = await calendarService.checkConflict(userId, startTime, endTime);
+            const conflict = await calendarService.checkConflict(userId, startTime, endTime, excludeAppointmentId);
             return res.status(200).json({ conflict: conflict || null });
         } catch (error) {
             return res.status(500).json({ error: error.message });
@@ -21,12 +42,19 @@ class CalendarController {
     // Replace the conflicting appointment
     async replaceAppointment(req, res) {
         try {
-            const { conflictApptId } = req.body;
+            const { conflictApptId, userId } = req.body;
             if (!conflictApptId) return res.status(400).json({ error: "Missing conflict format" });
 
-            await calendarService.replaceAppointment(conflictApptId);
+            if (userId) {
+                await calendarService.deleteAppointment(conflictApptId, userId);
+            } else {
+                await calendarService.replaceAppointment(conflictApptId);
+            }
             return res.status(200).json({ message: "conflict resolved" });
         } catch (error) {
+            if (error.statusCode) {
+                return res.status(error.statusCode).json({ error: error.message });
+            }
             return res.status(500).json({ error: error.message });
         }
     }
@@ -34,15 +62,16 @@ class CalendarController {
     // Find any system group matching the name and duration, otherwise automatically create the appointment
     async requestAddAppointment(req, res) {
         try {
+            const validationError = validateAppointmentPayload(req.body);
+            if (validationError) {
+                return res.status(400).json({ error: validationError });
+            }
+
             const { name, startTime, endTime } = req.body;
 
             // Calculate duration in minutes securely
             const start = new Date(startTime);
             const end = new Date(endTime);
-
-            if (end <= start || !name) {
-                return res.status(400).json({ error: "Invalid duration or name" });
-            }
 
             const duration = Math.round((end - start) / (1000 * 60)); // in minutes
 
@@ -65,7 +94,8 @@ class CalendarController {
     async confirmJoin(req, res) {
         try {
             const { meetingId, userId } = req.body;
-            await groupMeetingService.confirmJoin(meetingId, userId);
+            const meeting = await groupMeetingService.confirmJoin(meetingId, userId);
+            if (!meeting) return res.status(404).json({ error: "Group meeting not found" });
 
             return res.status(200).json({ message: "Joined successfully" });
         } catch (error) {
@@ -73,12 +103,106 @@ class CalendarController {
         }
     }
 
+    async leaveGroupMeeting(req, res) {
+        try {
+            const { id } = req.params;
+            const { userId } = req.body;
+            if (!userId) return res.status(400).json({ error: "Missing user" });
+
+            const participant = await groupMeetingService.leaveMeeting(id, userId);
+            if (!participant) return res.status(404).json({ error: "Active participant membership not found" });
+
+            return res.status(200).json({ message: "Removed from schedule" });
+        } catch (error) {
+            if (error.statusCode) {
+                return res.status(error.statusCode).json({ error: error.message });
+            }
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
     // Create the new appointment with its reminders manually when "No" is chosen
     async createAppointment(req, res) {
         try {
+            const validationError = validateAppointmentPayload(req.body);
+            if (validationError) {
+                return res.status(400).json({ error: validationError });
+            }
+
             const appointment = await calendarService.createAppointment(req.body);
             return res.status(201).json({ message: "Added successfully", appointment });
         } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    async getAppointments(req, res) {
+        try {
+            const { userId } = req.query;
+            if (!userId) return res.status(400).json({ error: "Missing user" });
+
+            const appointments = await calendarService.getAppointments(userId);
+            return res.status(200).json(appointments);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    async getAppointment(req, res) {
+        try {
+            const { id } = req.params;
+            const { userId } = req.query;
+            if (!userId) return res.status(400).json({ error: "Missing user" });
+
+            const appointment = await calendarService.getAppointment(id, userId);
+            if (!appointment) return res.status(404).json({ error: "Appointment not found" });
+
+            return res.status(200).json(appointment);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    async updateAppointment(req, res) {
+        try {
+            const validationError = validateAppointmentPayload(req.body);
+            if (validationError) {
+                return res.status(400).json({ error: validationError });
+            }
+
+            const { id } = req.params;
+            const conflict = await calendarService.checkConflict(req.body.userId, req.body.startTime, req.body.endTime, id);
+            if (conflict) {
+                return res.status(409).json({ error: "Time conflict", conflict });
+            }
+
+            const appointment = await calendarService.updateAppointment(id, req.body);
+            if (!appointment) return res.status(404).json({ error: "Appointment not found" });
+
+            return res.status(200).json({ message: "Updated successfully", appointment });
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    async deleteAppointment(req, res) {
+        try {
+            const { id } = req.params;
+            const { userId } = req.query;
+            if (!userId) return res.status(400).json({ error: "Missing user" });
+
+            const appointment = await calendarService.getAppointment(id, userId);
+            if (!appointment) return res.status(404).json({ error: "Appointment not found" });
+
+            await calendarService.deleteAppointment(id, userId);
+            return res.status(200).json({ message: "Deleted successfully" });
+        } catch (error) {
+            if (error.statusCode) {
+                return res.status(error.statusCode).json({ error: error.message });
+            }
+            if (error.code === 'P2025') {
+                return res.status(404).json({ error: "Appointment not found" });
+            }
             return res.status(500).json({ error: error.message });
         }
     }

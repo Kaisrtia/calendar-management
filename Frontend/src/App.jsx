@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Users, CheckCircle2, AlertCircle, Plus, LogIn, Clock, LogOut } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Calendar, MapPin, Users, CheckCircle2, AlertCircle, Plus, LogIn, Clock, LogOut, Bell, Pencil, Trash2, UserMinus } from 'lucide-react';
 import { format, addHours, startOfHour } from 'date-fns';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,17 +15,20 @@ function App() {
   
   // Schedule state
   const [schedule, setSchedule] = useState({ appointments: [], groupMeetings: [] });
+  const [editingAppointment, setEditingAppointment] = useState(null);
 
   const [formData, setFormData] = useState({
     name: '', location: '',
     startTime: format(startOfHour(addHours(new Date(), 1)), "yyyy-MM-dd'T'HH:mm"),
     endTime: format(startOfHour(addHours(new Date(), 2)), "yyyy-MM-dd'T'HH:mm"),
-    isGroupMeeting: false
+    isGroupMeeting: false,
+    reminderMinutesBefore: ''
   });
 
   const [conflictData, setConflictData] = useState(null);
   const [groupMatchData, setGroupMatchData] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Fetch users on mount
   useEffect(() => {
@@ -53,38 +56,118 @@ function App() {
     setSchedule({ appointments: [], groupMeetings: [] });
   };
 
-  const resetForm = () => {
+  const getReminderMinutesBefore = (appointment) => {
+    const reminder = appointment?.reminders?.[0];
+    if (!reminder) return '';
+
+    const diffMs = new Date(appointment.startTime) - new Date(reminder.remindAt);
+    const minutes = Math.round(diffMs / 60000);
+    return minutes >= 0 ? String(minutes) : '';
+  };
+
+  const toFormData = (appointment = null) => {
+    if (!appointment) {
+      return {
+        name: '',
+        location: '',
+        startTime: format(startOfHour(addHours(new Date(), 1)), "yyyy-MM-dd'T'HH:mm"),
+        endTime: format(startOfHour(addHours(new Date(), 2)), "yyyy-MM-dd'T'HH:mm"),
+        isGroupMeeting: false,
+        reminderMinutesBefore: ''
+      };
+    }
+
+    return {
+      name: appointment.name,
+      location: appointment.location,
+      startTime: format(new Date(appointment.startTime), "yyyy-MM-dd'T'HH:mm"),
+      endTime: format(new Date(appointment.endTime), "yyyy-MM-dd'T'HH:mm"),
+      isGroupMeeting: Boolean(appointment.groupMeeting),
+      reminderMinutesBefore: getReminderMinutesBefore(appointment)
+    };
+  };
+
+  const resetForm = (appointment = null) => {
+    setFormData(toFormData(appointment));
+    setEditingAppointment(appointment);
+    setStep(1); setConflictData(null); setGroupMatchData(null); setSuccessMessage(''); setErrorMessage('');
+  };
+
+  const validateForm = () => {
+    if (!formData.name.trim()) return 'Appointment name is required.';
+    if (!formData.location.trim()) return 'Location is required.';
+    if (!formData.startTime || !formData.endTime) return 'Start and end times are required.';
+    if (new Date(formData.endTime) <= new Date(formData.startTime)) return 'End time must be after start time.';
+    if (formData.reminderMinutesBefore !== '' && Number(formData.reminderMinutesBefore) < 0) return 'Reminder cannot be negative.';
+    return '';
+  };
+
+  const buildAppointmentPayload = () => ({
+    ...formData,
+    name: formData.name.trim(),
+    location: formData.location.trim(),
+    userId: currentUser.userId,
+    startTime: new Date(formData.startTime).toISOString(),
+    endTime: new Date(formData.endTime).toISOString(),
+    reminderMinutesBefore: formData.reminderMinutesBefore === '' ? null : Number(formData.reminderMinutesBefore)
+  });
+
+  const resetNewForm = () => {
     setFormData({
       name: '', location: '',
       startTime: format(startOfHour(addHours(new Date(), 1)), "yyyy-MM-dd'T'HH:mm"),
       endTime: format(startOfHour(addHours(new Date(), 2)), "yyyy-MM-dd'T'HH:mm"),
-      isGroupMeeting: false
+      isGroupMeeting: false,
+      reminderMinutesBefore: ''
     });
-    setStep(1); setConflictData(null); setGroupMatchData(null); setSuccessMessage('');
+    setEditingAppointment(null);
+    setStep(1); setConflictData(null); setGroupMatchData(null); setSuccessMessage(''); setErrorMessage('');
   };
 
   const handleOpenModal = () => {
-    resetForm(); setIsModalOpen(true);
+    resetNewForm(); setIsModalOpen(true);
+  };
+
+  const handleEditAppointment = (appointment) => {
+    resetForm(appointment); setIsModalOpen(true);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); setLoading(true);
+    e.preventDefault();
+    setErrorMessage('');
+
+    const validationError = validateForm();
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+
+    setLoading(true);
+    const payload = buildAppointmentPayload();
 
     try {
       const conflictRes = await fetch(`${API_URL}/appointments/check-conflict`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: currentUser.userId, startTime: new Date(formData.startTime).toISOString(), endTime: new Date(formData.endTime).toISOString() })
+        body: JSON.stringify({
+          userId: currentUser.userId,
+          startTime: payload.startTime,
+          endTime: payload.endTime,
+          excludeAppointmentId: editingAppointment?.id
+        })
       }).then(r => r.json());
 
       if (conflictRes.conflict) {
         setConflictData(conflictRes.conflict); setStep('CONFLICT'); setLoading(false); return;
       }
 
+      if (editingAppointment) {
+        await updateFinalAppointment();
+        return;
+      }
+
       const matchRes = await fetch(`${API_URL}/appointments/match-group-meeting`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData, userId: currentUser.userId, startTime: new Date(formData.startTime).toISOString(), endTime: new Date(formData.endTime).toISOString()
-        })
+        body: JSON.stringify(payload)
       }).then(r => r.json());
 
       if (matchRes.matchedGroupMeeting) {
@@ -98,25 +181,48 @@ function App() {
       }
 
       await createFinalAppointment();
-    } catch (err) {
-      alert("Error connecting to server"); setLoading(false);
+    } catch {
+      setErrorMessage("Error connecting to server"); setLoading(false);
     }
   };
 
   const createFinalAppointment = async () => {
     setLoading(true);
     try {
-      await fetch(`${API_URL}/appointments`, {
+      const res = await fetch(`${API_URL}/appointments`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData, userId: currentUser.userId, startTime: new Date(formData.startTime).toISOString(), endTime: new Date(formData.endTime).toISOString()
-        })
+        body: JSON.stringify(buildAppointmentPayload())
       });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Error creating appointment");
+      }
       setSuccessMessage('Appointment successfully scheduled!'); 
       setStep('SUCCESS');
       fetchSchedule(currentUser.userId); // refresh view
     } catch (err) {
-      alert("Error creating appointment");
+      setErrorMessage(err.message);
+    } finally { setLoading(false); }
+  };
+
+  const updateFinalAppointment = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/appointments/${editingAppointment.id}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildAppointmentPayload())
+      });
+      const data = await res.json();
+      if (res.status === 409) {
+        setConflictData(data.conflict); setStep('CONFLICT'); return;
+      }
+      if (!res.ok) throw new Error(data.error || "Error updating appointment");
+
+      setSuccessMessage('Appointment successfully updated!');
+      setStep('SUCCESS');
+      fetchSchedule(currentUser.userId);
+    } catch (err) {
+      setErrorMessage(err.message);
     } finally { setLoading(false); }
   };
 
@@ -126,14 +232,17 @@ function App() {
       try {
         await fetch(`${API_URL}/appointments/replace-conflict`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ conflictApptId: conflictData.id })
+          body: JSON.stringify({ conflictApptId: conflictData.id, userId: currentUser.userId })
         });
+
+        if (editingAppointment) {
+          await updateFinalAppointment();
+          return;
+        }
         
         const matchRes = await fetch(`${API_URL}/appointments/match-group-meeting`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...formData, userId: currentUser.userId, startTime: new Date(formData.startTime).toISOString(), endTime: new Date(formData.endTime).toISOString()
-          })
+          body: JSON.stringify(buildAppointmentPayload())
         }).then(r => r.json());
 
         if (matchRes.matchedGroupMeeting) {
@@ -145,7 +254,7 @@ function App() {
         } else {
           await createFinalAppointment();
         }
-      } catch (err) { alert("Error resolving conflict"); } finally { setLoading(false); }
+      } catch { setErrorMessage("Error resolving conflict"); } finally { setLoading(false); }
     } else { setStep(1); setConflictData(null); }
   };
 
@@ -161,7 +270,55 @@ function App() {
         setStep('SUCCESS');
         fetchSchedule(currentUser.userId); // refresh view
       } else { await createFinalAppointment(); }
-    } catch (err) { alert("Error"); } finally { setLoading(false); }
+    } catch { setErrorMessage("Error joining group meeting"); } finally { setLoading(false); }
+  };
+
+  const handleDeleteAppointment = async (appointment) => {
+    const confirmed = window.confirm(`Delete "${appointment.name}"?`);
+    if (!confirmed) return;
+
+    setLoading(true);
+    setErrorMessage('');
+    try {
+      const res = await fetch(`${API_URL}/appointments/${appointment.id}?userId=${currentUser.userId}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error deleting appointment');
+
+      fetchSchedule(currentUser.userId);
+      if (editingAppointment?.id === appointment.id) {
+        setIsModalOpen(false);
+        resetNewForm();
+      }
+    } catch (err) {
+      setErrorMessage(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLeaveGroupMeeting = async (meeting) => {
+    const confirmed = window.confirm(`Remove "${meeting.appointment.name}" from your schedule?`);
+    if (!confirmed) return;
+
+    setLoading(true);
+    setErrorMessage('');
+    try {
+      const res = await fetch(`${API_URL}/appointments/group-meetings/${meeting.id}/leave`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: currentUser.userId })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error removing group meeting');
+
+      fetchSchedule(currentUser.userId);
+    } catch (err) {
+      setErrorMessage(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // --- LOGIN PAGE ---
@@ -217,6 +374,13 @@ function App() {
         </button>
       </header>
 
+      {errorMessage && (
+        <div className="max-w-6xl w-full mx-auto mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
       <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:flex-row gap-6">
         
         {/* Left Side: Schedule */}
@@ -237,8 +401,18 @@ function App() {
             {schedule.appointments.map(apt => (
               <div key={apt.id} className="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:shadow-md transition">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-slate-800">{apt.name}</h3>
-                  <span className="text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Appt</span>
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-slate-800 truncate">{apt.name}</h3>
+                    <span className="inline-flex mt-1 text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Appt</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button type="button" title="Edit appointment" onClick={() => handleEditAppointment(apt)} className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-white rounded-lg transition">
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                    <button type="button" title="Delete appointment" onClick={() => handleDeleteAppointment(apt)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-white rounded-lg transition">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
                 <div className="text-sm text-slate-500 space-y-1">
                   <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5"/> {apt.location}</p>
@@ -246,28 +420,57 @@ function App() {
                     <Clock className="w-3.5 h-3.5 flex-shrink-0"/> 
                     {new Date(apt.startTime).toLocaleString()} - {new Date(apt.endTime).toLocaleTimeString()}
                   </p>
+                  {apt.reminders?.length > 0 && (
+                    <p className="flex items-center gap-1.5"><Bell className="w-3.5 h-3.5"/> Reminder set</p>
+                  )}
                 </div>
               </div>
             ))}
 
             {/* Render Group Meetings */}
-            {schedule.groupMeetings.map(gm => (
-              <div key={gm.id} className="bg-indigo-50 rounded-xl p-4 border border-indigo-100 hover:shadow-md transition">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-indigo-900">{gm.appointment.name}</h3>
-                  <span className="text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <Users className="w-3 h-3"/> Group
-                  </span>
+            {schedule.groupMeetings.map(gm => {
+              const groupAppointment = { ...gm.appointment, groupMeeting: gm };
+              const canManage = gm.ownerId === currentUser.userId;
+
+              return (
+                <div key={gm.id} className="bg-indigo-50 rounded-xl p-4 border border-indigo-100 hover:shadow-md transition">
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-indigo-900 truncate">{gm.appointment.name}</h3>
+                      <span className="inline-flex mt-1 text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full items-center gap-1">
+                        <Users className="w-3 h-3"/> Group
+                      </span>
+                    </div>
+                    {canManage && (
+                      <div className="flex items-center gap-1">
+                        <button type="button" title="Edit group meeting" onClick={() => handleEditAppointment(groupAppointment)} className="p-2 text-indigo-400 hover:text-indigo-700 hover:bg-white rounded-lg transition">
+                          <Pencil className="w-4 h-4" />
+                        </button>
+                        <button type="button" title="Delete group meeting" onClick={() => handleDeleteAppointment(groupAppointment)} className="p-2 text-indigo-400 hover:text-red-600 hover:bg-white rounded-lg transition">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+                    {!canManage && (
+                      <button type="button" title="Remove from schedule" onClick={() => handleLeaveGroupMeeting(gm)} className="p-2 text-indigo-400 hover:text-red-600 hover:bg-white rounded-lg transition">
+                        <UserMinus className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                  <div className="text-sm text-indigo-600 space-y-1">
+                    <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5"/> {gm.appointment.location}</p>
+                    <p className="flex items-center gap-1.5 min-w-0 truncate">
+                      <Clock className="w-3.5 h-3.5 flex-shrink-0"/> 
+                      {new Date(gm.appointment.startTime).toLocaleString()} - {new Date(gm.appointment.endTime).toLocaleTimeString()}
+                    </p>
+                    {gm.appointment.reminders?.length > 0 && (
+                      <p className="flex items-center gap-1.5"><Bell className="w-3.5 h-3.5"/> Reminder set</p>
+                    )}
+                    <p className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5"/> {gm.participants?.length || 0} participants</p>
+                  </div>
                 </div>
-                <div className="text-sm text-indigo-600 space-y-1">
-                  <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5"/> {gm.appointment.location}</p>
-                  <p className="flex items-center gap-1.5 min-w-0 truncate">
-                    <Clock className="w-3.5 h-3.5 flex-shrink-0"/> 
-                    {new Date(gm.appointment.startTime).toLocaleString()} - {new Date(gm.appointment.endTime).toLocaleTimeString()}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
           <button onClick={handleOpenModal} className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-xl transition-all shadow-lg hover:shadow-indigo-200 flex items-center justify-center gap-2">
@@ -288,7 +491,13 @@ function App() {
               
               {step === 1 && (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <h2 className="text-2xl font-bold text-slate-800 mb-6">Schedule Event</h2>
+                  <h2 className="text-2xl font-bold text-slate-800 mb-6">{editingAppointment ? 'Edit Event' : 'Schedule Event'}</h2>
+                  {errorMessage && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-slate-600 mb-1.5">Event Name</label>
@@ -315,10 +524,23 @@ function App() {
                        <input type="checkbox" id="isGroupMeeting" className="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 border-slate-300" checked={formData.isGroupMeeting} onChange={e => setFormData({...formData, isGroupMeeting: e.target.checked})} />
                        <label htmlFor="isGroupMeeting" className="text-sm font-medium text-slate-700">Make this a Group Meeting (Allows others to join)</label>
                     </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1.5">Reminder</label>
+                      <div className="relative">
+                        <Bell className="w-5 h-5 text-slate-400 absolute left-4 top-3.5" />
+                        <select className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-slate-700" value={formData.reminderMinutesBefore} onChange={e => setFormData({...formData, reminderMinutesBefore: e.target.value})}>
+                          <option value="">No reminder</option>
+                          <option value="5">5 minutes before</option>
+                          <option value="15">15 minutes before</option>
+                          <option value="30">30 minutes before</option>
+                          <option value="60">1 hour before</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div className="pt-4 flex gap-3">
                     <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-3 px-4 bg-slate-100 text-slate-600 rounded-xl font-medium hover:bg-slate-200 transition-colors">Cancel</button>
-                    <button type="submit" disabled={loading} className="flex-1 py-3 px-4 bg-slate-900 text-white rounded-xl font-medium hover:bg-black transition-colors disabled:opacity-50">{loading ? 'Checking...' : 'Continue'}</button>
+                    <button type="submit" disabled={loading} className="flex-1 py-3 px-4 bg-slate-900 text-white rounded-xl font-medium hover:bg-black transition-colors disabled:opacity-50">{loading ? 'Saving...' : editingAppointment ? 'Save Changes' : 'Continue'}</button>
                   </div>
                 </form>
               )}
