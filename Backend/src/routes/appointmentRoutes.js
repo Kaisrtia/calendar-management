@@ -13,8 +13,13 @@ router.post('/match-group-meeting', calendarController.requestAddAppointment.bin
 
 // 4. Optionally join
 router.post('/join-group', calendarController.confirmJoin.bind(calendarController));
+router.post('/group-meetings/:id/leave', calendarController.leaveGroupMeeting.bind(calendarController));
 
 // 5. Final Create
+router.get('/', calendarController.getAppointments.bind(calendarController));
 router.post('/', calendarController.createAppointment.bind(calendarController));
+router.get('/:id', calendarController.getAppointment.bind(calendarController));
+router.put('/:id', calendarController.updateAppointment.bind(calendarController));
+router.delete('/:id', calendarController.deleteAppointment.bind(calendarController));
 
 module.exports = router;

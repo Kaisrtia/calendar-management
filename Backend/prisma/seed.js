@@ -38,15 +38,21 @@ async function main() {
   const groupMeetingAppt = await prisma.appointment.create({
     data: {
       name: 'Weekly Sync',
+      description: 'Weekly alignment for design and engineering progress.',
       location: 'Zoom Room',
       startTime: gmStart,
       endTime: gmEnd,
       calendarId: user1.calendar.id, // Alice's calendar
       groupMeeting: {
         create: {
+          owner: {
+            connect: { userId: user1.userId }
+          },
           participants: {
              // Participant uses User ID (not Calendar ID)
-            connect: [{ userId: user1.userId }]
+            create: [
+              { user: { connect: { userId: user1.userId } } }
+            ]
           }
         }
       }
@@ -67,14 +73,21 @@ async function main() {
   const groupMeetingAppt2 = await prisma.appointment.create({
     data: {
       name: 'Monthly Planning',
+      description: 'Plan roadmap priorities and assign upcoming delivery tasks.',
       location: 'Conference Room B',
       startTime: monthlyStart,
       endTime: monthlyEnd,
       calendarId: user2.calendar.id, // Bob's Calendar
       groupMeeting: {
         create: {
+          owner: {
+            connect: { userId: user2.userId }
+          },
           participants: {
-            connect: [{ userId: user2.userId }, { userId: user1.userId }]
+            create: [
+              { user: { connect: { userId: user2.userId } } },
+              { user: { connect: { userId: user1.userId } } }
+            ]
           }
         }
       }
@@ -92,14 +105,20 @@ async function main() {
   const groupMeetingAppt3 = await prisma.appointment.create({
     data: {
       name: 'Code Review Session',
+      description: 'Review open pull requests and discuss implementation feedback.',
       location: 'Google Meet',
       startTime: codeRevStart,
       endTime: codeRevEnd,
       calendarId: user2.calendar.id,
       groupMeeting: {
         create: {
+          owner: {
+            connect: { userId: user2.userId }
+          },
           participants: {
-            connect: [{ userId: user2.userId }]
+            create: [
+              { user: { connect: { userId: user2.userId } } }
+            ]
           }
         }
       }
@@ -118,6 +137,7 @@ async function main() {
   const existingAppointment = await prisma.appointment.create({
     data: {
       name: 'Design Review',
+      description: 'Review latest UI drafts and capture design changes.',
       location: 'Room A',
       startTime: tomorrow,
       endTime: tomorrowEnd,

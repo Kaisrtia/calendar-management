@@ -24,8 +24,19 @@ app.get('/health', (req, res) => {
 });
 
 // App Listener
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
+});
+
+// Handle EADDRINUSE by using next available port
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        const fallbackPort = PORT + 1;
+        console.log(`Port ${PORT} is in use, trying port ${fallbackPort}...`);
+        app.listen(fallbackPort, () => {
+            console.log(`Server listening on port ${fallbackPort}`);
+        });
+    }
 });

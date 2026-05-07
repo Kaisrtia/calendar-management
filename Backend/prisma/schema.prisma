@@ -15,8 +15,11 @@ model User {
   // 1 to 1 relation with Calendar
   calendar      Calendar?
   
-  // Many-to-many: the group meetings this user participates in
-  groupMeetings GroupMeeting[]
+  // Primary controller for meetings owned by this user
+  ownedGroupMeetings GroupMeeting[] @relation("MeetingOwner")
+
+  // Explicit membership relation, including per-user soft delete state
+  groupMeetingParticipants GroupMeetingParticipant[]
 }
 
 model Calendar {
@@ -32,6 +35,7 @@ model Calendar {
 model Appointment {
   id            String         @id @default(uuid())
   name          String
+  description   String?
   location      String
   startTime     DateTime
   endTime       DateTime
@@ -58,11 +62,28 @@ model Reminder {
 
 model GroupMeeting {
   id            String      @id @default(uuid())
+  ownerId       String
+  deletedAt     DateTime?
   
   // 1:1 Relation mapping "inheritance" from Appointment
   appointmentId String      @unique
   appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  // The owner is the primary controller for create/update/delete.
+  owner         User        @relation("MeetingOwner", fields: [ownerId], references: [userId], onDelete: Cascade)
   
-  // Association: Participants (0..* users)
-  participants  User[]
+  // Association: Participants (0..*) with individual soft delete state
+  participants  GroupMeetingParticipant[]
+}
+
+model GroupMeetingParticipant {
+  id             String       @id @default(uuid())
+  groupMeetingId String
+  userId         String
+  deletedAt      DateTime?
+
+  groupMeeting   GroupMeeting @relation(fields: [groupMeetingId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@unique([groupMeetingId, userId])
 }

@@ -14,7 +14,8 @@ const scheduleReminderJobs = async (appointment, userId) => {
     userId,
     appointmentId: appointment.id,
     name: appointment.name,
-    startTime: appointment.startTime
+    startTime: appointment.startTime,
+    description: appointment.description || ''
   };
 
   for (const reminder of appointment.reminders) {
@@ -36,6 +37,38 @@ const scheduleReminderJobs = async (appointment, userId) => {
   }
 };
 
+const scheduleReminderForMinutes = async (appointment, userId, reminderMinutesBefore) => {
+  const minutes = Number(reminderMinutesBefore);
+  if (!appointment || !Number.isFinite(minutes) || minutes <= 0) {
+    return;
+  }
+
+  const startTime = new Date(appointment.startTime).getTime();
+  if (Number.isNaN(startTime)) {
+    return;
+  }
+
+  const remindAt = startTime - minutes * 60000;
+  const delay = Math.max(remindAt - Date.now(), 0);
+
+  await reminderQueue.add(
+    'reminder',
+    {
+      userId,
+      appointmentId: appointment.id,
+      name: appointment.name,
+      description: appointment.description || '',
+      startTime: appointment.startTime,
+      remindAt: new Date(remindAt).toISOString()
+    },
+    {
+      delay,
+      removeOnComplete: true,
+      removeOnFail: 1000
+    }
+  );
+};
+
 new Worker(
   'appointment-reminders',
   async (job) => {
@@ -44,6 +77,7 @@ new Worker(
       type: 'REMINDER',
       appointmentId: payload.appointmentId,
       name: payload.name,
+      description: payload.description || '',
       startTime: payload.startTime,
       remindAt: payload.remindAt,
       message: `Reminder: ${payload.name} starts soon.`
@@ -53,5 +87,6 @@ new Worker(
 );
 
 module.exports = {
-  scheduleReminderJobs
-};
+  scheduleReminderJobs,
+  scheduleReminderForMinutes
+}
