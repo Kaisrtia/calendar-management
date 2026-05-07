@@ -100,6 +100,7 @@ class AppointmentRepository {
         
         const appointmentData = {
             name: data.name,
+            description: data.description?.trim() || null,
             location: data.location,
             startTime: new Date(data.startTime),
             endTime: new Date(data.endTime),
@@ -170,6 +171,7 @@ class AppointmentRepository {
                 where: { id },
                 data: {
                     name: data.name,
+                    description: data.description?.trim() || null,
                     location: data.location,
                     startTime: new Date(data.startTime),
                     endTime: new Date(data.endTime),

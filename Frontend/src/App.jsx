@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, MapPin, Users, CheckCircle2, AlertCircle, Plus, LogIn, Clock, LogOut, Bell, Pencil, Trash2, UserMinus } from 'lucide-react';
+import { Calendar, MapPin, Users, CheckCircle2, AlertCircle, Plus, LogIn, Clock, LogOut, Bell, Pencil, Trash2, UserMinus, FileText } from 'lucide-react';
 import { format, addHours, startOfHour } from 'date-fns';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
@@ -18,7 +18,7 @@ function App() {
   const [editingAppointment, setEditingAppointment] = useState(null);
 
   const [formData, setFormData] = useState({
-    name: '', location: '',
+    name: '', description: '', location: '',
     startTime: format(startOfHour(addHours(new Date(), 1)), "yyyy-MM-dd'T'HH:mm"),
     endTime: format(startOfHour(addHours(new Date(), 2)), "yyyy-MM-dd'T'HH:mm"),
     isGroupMeeting: false,
@@ -56,6 +56,14 @@ function App() {
     setSchedule({ appointments: [], groupMeetings: [] });
   };
 
+  const getGroupParticipantNames = (meeting) => {
+    const names = meeting?.participants
+      ?.map(participant => participant.user?.name)
+      .filter(Boolean);
+
+    return names?.length ? names.join(', ') : 'No active participants';
+  };
+
   const getReminderMinutesBefore = (appointment) => {
     const reminder = appointment?.reminders?.[0];
     if (!reminder) return '';
@@ -69,6 +77,7 @@ function App() {
     if (!appointment) {
       return {
         name: '',
+        description: '',
         location: '',
         startTime: format(startOfHour(addHours(new Date(), 1)), "yyyy-MM-dd'T'HH:mm"),
         endTime: format(startOfHour(addHours(new Date(), 2)), "yyyy-MM-dd'T'HH:mm"),
@@ -79,6 +88,7 @@ function App() {
 
     return {
       name: appointment.name,
+      description: appointment.description || '',
       location: appointment.location,
       startTime: format(new Date(appointment.startTime), "yyyy-MM-dd'T'HH:mm"),
       endTime: format(new Date(appointment.endTime), "yyyy-MM-dd'T'HH:mm"),
@@ -105,6 +115,7 @@ function App() {
   const buildAppointmentPayload = () => ({
     ...formData,
     name: formData.name.trim(),
+    description: formData.description.trim(),
     location: formData.location.trim(),
     userId: currentUser.userId,
     startTime: new Date(formData.startTime).toISOString(),
@@ -114,7 +125,7 @@ function App() {
 
   const resetNewForm = () => {
     setFormData({
-      name: '', location: '',
+      name: '', description: '', location: '',
       startTime: format(startOfHour(addHours(new Date(), 1)), "yyyy-MM-dd'T'HH:mm"),
       endTime: format(startOfHour(addHours(new Date(), 2)), "yyyy-MM-dd'T'HH:mm"),
       isGroupMeeting: false,
@@ -420,9 +431,19 @@ function App() {
                     <Clock className="w-3.5 h-3.5 flex-shrink-0"/> 
                     {new Date(apt.startTime).toLocaleString()} - {new Date(apt.endTime).toLocaleTimeString()}
                   </p>
+                  {apt.description && (
+                    <p className="flex items-start gap-1.5">
+                      <FileText className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"/>
+                      <span className="whitespace-pre-wrap break-words">{apt.description}</span>
+                    </p>
+                  )}
                   {apt.reminders?.length > 0 && (
                     <p className="flex items-center gap-1.5"><Bell className="w-3.5 h-3.5"/> Reminder set</p>
                   )}
+                  <p className="flex items-start gap-1.5">
+                    <Users className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"/>
+                    <span className="break-words">Participant: {currentUser.name}</span>
+                  </p>
                 </div>
               </div>
             ))}
@@ -463,10 +484,19 @@ function App() {
                       <Clock className="w-3.5 h-3.5 flex-shrink-0"/> 
                       {new Date(gm.appointment.startTime).toLocaleString()} - {new Date(gm.appointment.endTime).toLocaleTimeString()}
                     </p>
+                    {gm.appointment.description && (
+                      <p className="flex items-start gap-1.5">
+                        <FileText className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"/>
+                        <span className="whitespace-pre-wrap break-words">{gm.appointment.description}</span>
+                      </p>
+                    )}
                     {gm.appointment.reminders?.length > 0 && (
                       <p className="flex items-center gap-1.5"><Bell className="w-3.5 h-3.5"/> Reminder set</p>
                     )}
-                    <p className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5"/> {gm.participants?.length || 0} participants</p>
+                    <p className="flex items-start gap-1.5">
+                      <Users className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"/>
+                      <span className="break-words">{gm.participants?.length || 0} participants: {getGroupParticipantNames(gm)}</span>
+                    </p>
                   </div>
                 </div>
               );
@@ -502,6 +532,13 @@ function App() {
                     <div>
                       <label className="block text-sm font-medium text-slate-600 mb-1.5">Event Name</label>
                       <input type="text" required className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="E.g., Design Sync" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-600 mb-1.5">Description</label>
+                      <div className="relative">
+                        <FileText className="w-5 h-5 text-slate-400 absolute left-4 top-3.5" />
+                        <textarea className="w-full min-h-24 pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all resize-none" placeholder="Agenda, notes, or meeting details" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+                      </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-600 mb-1.5">Location</label>
@@ -565,6 +602,18 @@ function App() {
                   <div>
                     <h2 className="text-2xl font-bold text-slate-900 mb-2">Group Meeting Found</h2>
                     <p className="text-slate-500">A group meeting named <strong className="text-slate-800">{groupMatchData?.appointment?.name}</strong> exactly matching your duration exists. Would you like to join it instead?</p>
+                    <div className="mt-4 rounded-xl bg-slate-50 border border-slate-100 p-4 text-left text-sm text-slate-600 space-y-2">
+                      {groupMatchData?.appointment?.description && (
+                        <p className="flex items-start gap-2">
+                          <FileText className="w-4 h-4 mt-0.5 flex-shrink-0 text-indigo-500" />
+                          <span className="whitespace-pre-wrap break-words">{groupMatchData.appointment.description}</span>
+                        </p>
+                      )}
+                      <p className="flex items-start gap-2">
+                        <Users className="w-4 h-4 mt-0.5 flex-shrink-0 text-indigo-500" />
+                        <span className="break-words">{groupMatchData?.participants?.length || 0} participants: {getGroupParticipantNames(groupMatchData)}</span>
+                      </p>
+                    </div>
                   </div>
                   <div className="flex flex-col gap-3 pt-4">
                     <button onClick={() => handleJoinGroup('YES')} className="w-full py-3.5 px-4 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200/50">Yes, Join Group</button>

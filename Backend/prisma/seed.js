@@ -38,6 +38,7 @@ async function main() {
   const groupMeetingAppt = await prisma.appointment.create({
     data: {
       name: 'Weekly Sync',
+      description: 'Weekly alignment for design and engineering progress.',
       location: 'Zoom Room',
       startTime: gmStart,
       endTime: gmEnd,
@@ -72,6 +73,7 @@ async function main() {
   const groupMeetingAppt2 = await prisma.appointment.create({
     data: {
       name: 'Monthly Planning',
+      description: 'Plan roadmap priorities and assign upcoming delivery tasks.',
       location: 'Conference Room B',
       startTime: monthlyStart,
       endTime: monthlyEnd,
@@ -103,6 +105,7 @@ async function main() {
   const groupMeetingAppt3 = await prisma.appointment.create({
     data: {
       name: 'Code Review Session',
+      description: 'Review open pull requests and discuss implementation feedback.',
       location: 'Google Meet',
       startTime: codeRevStart,
       endTime: codeRevEnd,
@@ -134,6 +137,7 @@ async function main() {
   const existingAppointment = await prisma.appointment.create({
     data: {
       name: 'Design Review',
+      description: 'Review latest UI drafts and capture design changes.',
       location: 'Room A',
       startTime: tomorrow,
       endTime: tomorrowEnd,

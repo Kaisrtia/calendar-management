@@ -35,6 +35,7 @@ model Calendar {
 model Appointment {
   id            String         @id @default(uuid())
   name          String
+  description   String?
   location      String
   startTime     DateTime
   endTime       DateTime
