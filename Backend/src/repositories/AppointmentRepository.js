@@ -28,13 +28,22 @@ class AppointmentRepository {
 
     async createAppointment(data) {
         const user = await prisma.user.findUnique({ where: { userId: data.userId }, include: { calendar: true } });
-        
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        let calendarId = user.calendar?.id;
+        if (!calendarId) {
+            const calendar = await prisma.calendar.create({ data: { userId: user.userId } });
+            calendarId = calendar.id;
+        }
+
         const appointmentData = {
             name: data.name,
             location: data.location,
             startTime: new Date(data.startTime),
             endTime: new Date(data.endTime),
-            calendarId: user.calendar.id,
+            calendarId,
             reminders: {
                 create: data.reminders?.map(remindAt => ({ remindAt: new Date(remindAt) })) || []
             }

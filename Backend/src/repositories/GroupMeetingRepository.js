@@ -6,7 +6,7 @@ class GroupMeetingRepository {
         const meetings = await prisma.groupMeeting.findMany({
             include: { appointment: true }
         });
-        
+
         for (const gm of meetings) {
             if (gm.appointment.name === name) {
                 const diffMs = new Date(gm.appointment.endTime) - new Date(gm.appointment.startTime);
@@ -25,8 +25,18 @@ class GroupMeetingRepository {
             data: {
                 participants: { connect: { userId } }
             },
-            include: { appointment: true }
+            include: { appointment: { include: { reminders: true } } }
         });
+    }
+
+    async ensureUserCalendar(userId) {
+        const user = await prisma.user.findUnique({ where: { userId }, include: { calendar: true } });
+        if (!user) {
+            throw new Error('User not found');
+        }
+        if (!user.calendar) {
+            await prisma.calendar.create({ data: { userId: user.userId } });
+        }
     }
 }
 module.exports = new GroupMeetingRepository();

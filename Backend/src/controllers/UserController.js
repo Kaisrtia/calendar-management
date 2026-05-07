@@ -10,20 +10,23 @@ class UserController {
             res.status(500).json({ error: e.message });
         }
     }
-    
+
     async getUserSchedule(req, res) {
         try {
             const { userId } = req.params;
             const user = await prisma.user.findUnique({ where: { userId }, include: { calendar: true } });
-            
-            if (!user || !user.calendar) {
+
+            if (!user) {
                 return res.json({ appointments: [], groupMeetings: [] });
             }
 
-            const appointments = await prisma.appointment.findMany({ 
-                where: { calendarId: user.calendar.id, groupMeeting: null },
-                orderBy: { startTime: 'asc' }
-            });
+            const appointments = user.calendar
+                ? await prisma.appointment.findMany({
+                    where: { calendarId: user.calendar.id, groupMeeting: null },
+                    orderBy: { startTime: 'asc' }
+                })
+                : [];
+
             const groupMeetings = await prisma.groupMeeting.findMany({
                 where: { participants: { some: { userId } } },
                 include: { appointment: true }

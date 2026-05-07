@@ -1,6 +1,33 @@
 const calendarService = require('../services/CalendarService');
 const groupMeetingService = require('../services/GroupMeetingService');
 
+const withReminderFromMinutes = (payload) => {
+    const minutes = Number(payload.remindBeforeMinutes);
+    if (!Number.isFinite(minutes) || minutes <= 0) {
+        return payload;
+    }
+
+    const startTime = new Date(payload.startTime);
+    if (Number.isNaN(startTime.getTime())) {
+        return payload;
+    }
+
+    if (Array.isArray(payload.reminders) && payload.reminders.length > 0) {
+        return payload;
+    }
+
+    const remindAt = new Date(startTime.getTime() - minutes * 60000).toISOString();
+    return { ...payload, reminders: [remindAt] };
+};
+
+const isStartInPast = (startTime) => {
+    const start = new Date(startTime);
+    if (Number.isNaN(start.getTime())) {
+        return false;
+    }
+    return start <= new Date();
+};
+
 class CalendarController {
 
     // Check if new appointment conflicts with existing ones
@@ -44,6 +71,10 @@ class CalendarController {
                 return res.status(400).json({ error: "Invalid duration or name" });
             }
 
+            if (isStartInPast(startTime)) {
+                return res.status(400).json({ error: "Start time must be in the future" });
+            }
+
             const duration = Math.round((end - start) / (1000 * 60)); // in minutes
 
             const matchingGroupMeeting = await groupMeetingService.findMatchingGroupMeeting(name, duration);
@@ -53,7 +84,7 @@ class CalendarController {
             } else {
                 // [No matching group meeting]
                 // According to UML, create appointment and reminders immediately
-                const appointment = await calendarService.createAppointment(req.body);
+                const appointment = await calendarService.createAppointment(withReminderFromMinutes(req.body));
                 return res.status(201).json({ message: "Added successfully", appointment });
             }
         } catch (error) {
@@ -76,7 +107,10 @@ class CalendarController {
     // Create the new appointment with its reminders manually when "No" is chosen
     async createAppointment(req, res) {
         try {
-            const appointment = await calendarService.createAppointment(req.body);
+            if (isStartInPast(req.body.startTime)) {
+                return res.status(400).json({ error: "Start time must be in the future" });
+            }
+            const appointment = await calendarService.createAppointment(withReminderFromMinutes(req.body));
             return res.status(201).json({ message: "Added successfully", appointment });
         } catch (error) {
             return res.status(500).json({ error: error.message });

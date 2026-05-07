@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const userRoutes = require('./routes/userRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routing
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // General connection check
 app.get('/health', (req, res) => {
