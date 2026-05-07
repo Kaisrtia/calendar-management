@@ -1,0 +1,13 @@
+
+services:
+  redis:
+    image: redis
+    container_name: event-management-redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./src/config/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis_data:/data
+    command: redis-server /usr/local/etc/redis/redis.conf
+volumes:
+  redis_data:
