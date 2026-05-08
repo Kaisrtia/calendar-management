@@ -43,8 +43,23 @@ function App() {
   const fetchSchedule = (userId) => {
     fetch(`${API_URL}/users/${userId}/schedule`)
       .then(r => r.json())
-      .then(data => setSchedule(data))
-      .catch(err => console.error("Error fetching schedule", err));
+      .then(data => {
+        if (data.error) {
+           console.error("Backend error:", data.error);
+           setErrorMessage(data.error);
+           setSchedule({ appointments: [], groupMeetings: [] });
+           return;
+        }
+        setSchedule({
+          appointments: data.appointments || [],
+          groupMeetings: data.groupMeetings || []
+        });
+      })
+      .catch(err => {
+        console.error("Error fetching schedule", err);
+        setSchedule({ appointments: [], groupMeetings: [] });
+        setErrorMessage("Could not load schedule");
+      });
   };
 
   const handleLogin = (user) => {
