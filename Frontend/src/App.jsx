@@ -218,7 +218,7 @@ function App() {
 
     const validationError = validateForm();
     if (validationError) {
-      setErrorMessage(validationError);
+      window.alert(validationError);
       return;
     }
 
@@ -630,12 +630,6 @@ function App() {
               {step === 1 && (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <h2 className="text-2xl font-bold text-slate-800 mb-6">{editingAppointment ? 'Edit Event' : 'Schedule Event'}</h2>
-                  {errorMessage && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                      <span>{errorMessage}</span>
-                    </div>
-                  )}
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-slate-600 mb-1.5">Event Name</label>

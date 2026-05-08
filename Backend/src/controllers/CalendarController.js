@@ -28,26 +28,7 @@ const isStartInPast = (startTime) => {
     return start <= new Date();
 };
 
-function validateAppointmentPayload(body) {
-    const { userId, name, location, startTime, endTime } = body;
-    const start = new Date(startTime);
-    const end = new Date(endTime);
 
-    if (!userId) return "Missing user";
-    if (!name || !name.trim()) return "Appointment name is required";
-    if (!location || !location.trim()) return "Location is required";
-    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return "Start and end times are required";
-    if (end <= start) return "End time must be after start time";
-
-    if (body.reminderMinutesBefore !== undefined && body.reminderMinutesBefore !== null && body.reminderMinutesBefore !== '') {
-        const minutesBefore = Number(body.reminderMinutesBefore);
-        if (!Number.isFinite(minutesBefore) || minutesBefore < 0) {
-            return "Reminder must be a positive number of minutes before the appointment";
-        }
-    }
-
-    return null;
-}
 
 class CalendarController {
 
@@ -89,11 +70,6 @@ class CalendarController {
     // Find any system group matching the name and duration, otherwise automatically create the appointment
     async requestAddAppointment(req, res) {
         try {
-            const validationError = validateAppointmentPayload(req.body);
-            if (validationError) {
-                return res.status(400).json({ error: validationError });
-            }
-
             const { name, startTime, endTime, location } = req.body;
 
             // Calculate duration in minutes securely
@@ -164,11 +140,6 @@ class CalendarController {
     // Create the new appointment with its reminders manually when "No" is chosen
     async createAppointment(req, res) {
         try {
-            const validationError = validateAppointmentPayload(req.body);
-            if (validationError) {
-                return res.status(400).json({ error: validationError });
-            }
-
             const appointment = await calendarService.createAppointment(req.body);
             return res.status(201).json({ message: "Added successfully", appointment });
         } catch (error) {
@@ -205,11 +176,6 @@ class CalendarController {
 
     async updateAppointment(req, res) {
         try {
-            const validationError = validateAppointmentPayload(req.body);
-            if (validationError) {
-                return res.status(400).json({ error: validationError });
-            }
-
             const { id } = req.params;
             const existing = await calendarService.getAppointment(id, req.body.userId);
             if (!existing) return res.status(404).json({ error: "Appointment not found" });

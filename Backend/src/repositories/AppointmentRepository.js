@@ -8,11 +8,27 @@ class AppointmentRepository {
 
         return await prisma.appointment.findFirst({
             where: {
-                calendarId: user.calendar.id,
                 ...(excludeAppointmentId ? { id: { not: excludeAppointmentId } } : {}),
                 OR: [
-                    { groupMeeting: null },
-                    { groupMeeting: { deletedAt: null } }
+                    {
+                        calendarId: user.calendar.id,
+                        groupMeeting: null
+                    },
+                    {
+                        calendarId: user.calendar.id,
+                        groupMeeting: { deletedAt: null }
+                    },
+                    {
+                        groupMeeting: {
+                            deletedAt: null,
+                            participants: {
+                                some: {
+                                    userId: userId,
+                                    deletedAt: null
+                                }
+                            }
+                        }
+                    }
                 ],
                 AND: [
                     {
